@@ -1,0 +1,21 @@
+[Unit]
+Description=PROJECT_NAME SERVICE_NAME service
+After=syslog.target network.target
+
+[Service]
+Type=exec
+
+WorkingDirectory=/home/UNAME/ms/SERVICE_NAME/
+ExecStart=/home/UNAME/ms/SERVICE_NAME/SERVICE_NAME
+
+User=UNAME
+Group=UNAME
+Restart=always
+RestartSec=5
+
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=SERVICE_NAME
+
+[Install]
+WantedBy=multi-user.target
