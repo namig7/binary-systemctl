@@ -99,7 +99,7 @@ while read -r system; do
     if [[ $sampleprojectname != "" && $project != "" ]]; then
         sed -i "s/$sampleprojectname/${project,,}/g" "$system-lr.conf"
     fi
-    cp "$(pwd)/ready/$system-lr.conf" "/etc/logrotate.d/"
+    cp "$(pwd)/$system-lr.conf" "/etc/logrotate.d/"
     echo -ne "${BLUE}[#######################]${NC}   ${GREEN}(100%)${NC} - Done\r"
     echo -ne '\n'
     
