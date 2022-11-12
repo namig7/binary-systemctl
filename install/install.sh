@@ -16,8 +16,8 @@ search="SERVICE_NAME"
 sampleprojectname="PROJECT_NAME"
 system="system"
 samplename="UNAME"
-FolderToScan="/home/ubuntu/ms"
-FolderInstall="/home/ubuntu/install/"
+folderToScan="/home/ubuntu/ms"
+folderInstall="/home/ubuntu/install/"
 ListFile="/home/ubuntu/install/list"
 username="ubuntu"
 project="ms"
@@ -28,10 +28,11 @@ read project
 # Reading binary names
 echo -e "${BLUE}$(date +'%Y/%m/%d %H:%M:%S:%3N')${NC}     Reading binary names... "
 echo -ne "${BLUE}[#####                  ]${NC}   (33%)\r"
-cd $FolderToScan
+cd $folderToScan
 echo -ne "${BLUE}[#############          ]${NC}   (66%)\r"
 ls -d */ | cut -f1 -d'/' >> $ListFile
-cd $FolderInstall
+cd $folderInstall
+mkdir ready/
 echo -ne "${BLUE}[#######################]${NC}   ${GREEN}(100%)${NC} - Done\r"
 echo -ne '\n'
 
@@ -45,14 +46,14 @@ while read -r system; do
     echo -e "${BLUE}$(date +'%Y/%m/%d %H:%M:%S:%3N')${NC}     Creating temporary files:"
     echo -ne "${BLUE}[                       ]${NC}   (0%)\r"
     
-    mkdir ready/
-    cp "./$filename" "./ready/$system.service"
+    mkdir "ready/$system/"
+    cp "./$filename" "./ready/$system/$system.service"
     echo -ne "${BLUE}[#####                  ]${NC}   (25%)\r"
-    cp "./$conf" "./ready/$system.conf"
+    cp "./$conf" "./ready/$system/$system.conf"
     echo -ne "${BLUE}[###########            ]${NC}   (50%)\r"
-    cp "./$lr" "./ready/$system-lr.conf"
+    cp "./$lr" "./ready/$system/$system-lr.conf"
     echo -ne "${BLUE}[################       ]${NC}   (75%)\r"
-    cd ./ready/
+    cd "./ready/$system/"
     echo -ne "${BLUE}[#######################]${NC}   ${GREEN}(100%)${NC} - Done\r"
     echo -ne '\n'
     
@@ -105,7 +106,7 @@ while read -r system; do
     
     
     # End of configuration preparing process
-    cd ..
+    cd ../../
     
     
     # Enabling systemctl service
