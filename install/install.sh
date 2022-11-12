@@ -26,7 +26,7 @@ echo -e "${CYAN}Please Enter the project name:${NC} "
 read project
 
 # Reading binary names
-echo -e "${BLUE}$(date +'%Y/%m/%d %H:%M:%S:%3N')${NC}     Reading binary names... "
+echo -e "${BLUE}$(date +'%Y/%m/%d %H:%M:%S:%3N')${NC}     Reading binary names in the folder"
 echo -ne "${BLUE}[#####                  ]${NC}   (33%)\r"
 cd $folderToScan
 echo -ne "${BLUE}[#############          ]${NC}   (66%)\r"
@@ -35,6 +35,10 @@ cd $folderInstall
 mkdir ready/
 echo -ne "${BLUE}[#######################]${NC}   ${GREEN}(100%)${NC} - Done\r"
 echo -ne '\n'
+
+echo -e "${BLUE}$(date +'%Y/%m/%d %H:%M:%S:%3N')${NC}     List of the binary files have been created"
+echo -ne '\n'
+
 
 # Configuration of the binaries as a systemctl
 
@@ -112,7 +116,7 @@ while read -r system; do
     # Enabling systemctl service
     echo -e "${BLUE}$(date +'%Y/%m/%d %H:%M:%S:%3N')${NC}     Enabling systemctl service: "
     echo -ne "${BLUE}[                       ]${NC}   (0%)\r"
-    cp "$(pwd)/ready/$system.service" "/etc/systemd/system/"
+    cp "$(pwd)/ready/$system/$system.service" "/etc/systemd/system/"
     echo -ne "${BLUE}[#####                  ]${NC}   (33%)\r"
     systemctl daemon-reload
     echo -ne "${BLUE}[#############          ]${NC}   (66%)\r"
@@ -136,7 +140,7 @@ while read -r system; do
     echo -ne "${BLUE}[#####                  ]${NC}   (33%)\r"
     chown -R syslog:syslog "/var/log/${project,,}/$system"
     echo -ne "${BLUE}[#############          ]${NC}   (66%)\r"
-    cp "$(pwd)/ready/$system.conf" "/etc/rsyslog.d/"
+    cp "$(pwd)/ready/$system/$system.conf" "/etc/rsyslog.d/"
     systemctl restart rsyslog.service
     echo -ne "${BLUE}[#######################]${NC}   ${GREEN}(100%)${NC} - Done\r"
     
